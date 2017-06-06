@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>IPL Prediction | Soft Computing</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-pink.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+</script>
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    .hideit{
+      display: none;
+    }
+    .mdl-layout__tab-panel{
+      padding-top: 0px !important;
+    }
+    .mdl-data-table{
+      margin:auto !important;
+    }
+
+    </style>
+  </head>
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+   <!-- Modal -->
+        <div id="predict" class="modal fade" role="dialog">
+          <div class="modal-dialog" style="width: 1000px;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title" style="text-align: center;">IPL Team Preditor</h4>
+                </div>
+                <div class="modal-body">
+                  <h2>Select your Teams To Predict</h2>
+                  <br>
+                  <br>
+                  <div class="row">
+                    <div class="col-sm-offset-1 col-sm-4">
+                      <div class="form-group">
+                        <label for="sel1">Select Team1:</label>
+                        <select class="form-control" id="team1" >
+                          <option val = 'RCB'>RCB</option>
+                          <option val = 'KKR'>KKR</option>
+                          <option val = 'MI'>MI</option>
+                          <option val = 'DD'>DD</option>
+                          <option val = 'KXIP'>KXIP</option>
+                          <option val = 'SRH'>SRH</option>
+                          <option val = 'GL'>GL</option>
+                          <option val = 'RPS'>RPS</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-2" style="margin-top: 8px;">
+                      <div id="tobaho">
+                        <div id="toss">
+                        <input type="radio" id="itoss1" name="ntoss" value="1"> Who won Toss <input type="radio" id="itoss2" name="ntoss" value="2">
+                      </div>
+                      <div id="bat" style="    margin-top: 3px;
+    margin-bottom: 3px;">
+                        <input type="radio" id="ibat1" name="nbat" value="1"> Batting Team <input type="radio" id="ibat2" name="nbat" value="2" style="margin-left: 8.5px;">
+                      </div>
+                      <div id="home">
+                        <input type="radio" id="ihome1" name="nhome" value="1"> Home Ground <input type="radio" id="ihome2" name="nhome" value="2" style="margin-left: 1.7px;">
+                      </div>
+                      </div>
+                    </div>
+                    <div class=" col-sm-4">
+                      <div class="form-group">
+                        <label for="sel1">Select Team2:</label>
+                        <select class="form-control" id="team2">
+                          <option val = 'kkr'>KKR</option>
+                          <option val = 'rcb'>RCB</option>
+                          <option val = 'mi'>MI</option>
+                          <option val = 'dd'>DD</option>
+                          <option val = 'kxip'>KXIP</option>
+                          <option val = 'srh'>SRH</option>
+                          <option val = 'gl'>GL</option>
+                          <option val = 'rps'>RPS</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" id="moredetails">
+                    <div class="col-sm-6">
+                    <p style="text-align: center;" onclick="update();"><a href="JavaScript:void(0)">Update</a></p>
+                      <table class="mdl-data-table mdl-js-data-table">
+                        <thead>
+                        <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Current Form</th></tr>
+                        </thead>
+                        <tbody id="team1_form">
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-sm-6">
+                    <p style="text-align: center;" onclick="update();"><a href="JavaScript:void(0)">Update</a></p>
+                      <table class="mdl-data-table mdl-js-data-table">
+                        <thead>
+                        <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Current Form</th></tr>
+                        </thead>
+                        <tbody id="team2_form">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    
+                    <div class="col-sm-offset-4 col-sm-4">
+                      <a href="JavaScript:void(0)" onclick="more()" id="more_details">
+                        Enter More Details
+                      </a>
+                      <a href="JavaScript:void(0)" onclick="less()" id="less_details">
+                        Ignore  Details
+                      </a>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top: 15px;">
+                    <div class="col-sm-offset-4">
+                      <div class="col-sm-4">
+                      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" onclick="execute()">
+                    Predict IPL Winner
+                  </button>
+                    </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div>
+                    <h3 class="hideit" id="prediction" style="text-align: center;">Team <b>RCB</b> is going to win.</h3>
+                    <!-- <h4 id="chancetext1"> </h4><h4 id="chance1"></h4><br> -->
+                    <h4 class="hideit" id="lala"  style="text-align: center;"><span id="chancetext1"></span><span id="chance1"></span>%</h4><br>
+                    <h4 class="hideit" id="lalala"  style="text-align: center;"><span id="chancetext2"></span><span id="chance2"></span>%</h4>
+                    <!-- <h4 id="chancetext2"> </h4><h4 id="chance2"></h4> -->
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-dismiss ="modal" onclick="dead()">
+                    Close
+                  </button>
+                </div>
+            </div>
+
+          </div>
+        </div>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row" style="margin: auto;width: initial;">
+          <h3 style="text-align: center;">IPL TEAMS</h3>
+        </div>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+          <a href="#rcb" class="mdl-layout__tab is-active">RCB</a>
+          <a href="#kkr" class="mdl-layout__tab">KKR</a>
+          <a href="#mi" class="mdl-layout__tab">MI</a>
+          <a href="#dd" class="mdl-layout__tab">DD</a>
+          <a href="#kxip" class="mdl-layout__tab">KXIP</a>
+          <a href="#srh" class="mdl-layout__tab">SRH</a>
+          <a href="#gl" class="mdl-layout__tab">GL</a>
+          <a href="#rps" class="mdl-layout__tab">RPS</a>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+      <!-- Tab Pane Starts Here -->
+        <div class="mdl-layout__tab-panel is-active" id="rcb">
+        <div class="row">
+          <div class="col-sm-8">
+            <h3 style="text-align: center;">Royal Challengers Bangalore</h3>
+          <table class="mdl-data-table mdl-js-data-table">
+            <thead>
+            <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Batting Score</th><th>Bowling Score</th></tr>
+            </thead>
+            <tbody id="dataRCB">
+            </tbody>
+          </table>
+          </div>
+          <div class="col-sm-4">
+            <div class="jumbotron" style="margin-top: 110px;margin-right: 100px;">
+              <div class="container">
+              <h3><b style="color: #b81b1b;">Team Score</b> : <b id="rcbscore"></b> </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-toggle ="modal" data-target="#predict">
+                Predict IPL Winner
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+        <!-- Tab Pane Ends Here -->
+
+
+         <!-- Tab Pane Starts Here -->
+        <div class="mdl-layout__tab-panel is-active" id="mi">
+        <div class="row">
+          <div class="col-sm-8">
+            <h3 style="text-align: center;">Mumbai Indians</h3>
+          <table class="mdl-data-table mdl-js-data-table">
+            <thead>
+            <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Batting Score</th><th>Bowling Score</th></tr>
+            </thead>
+            <tbody id="dataMI">
+            </tbody>
+          </table>
+          </div>
+          <div class="col-sm-4">
+            <div class="jumbotron" style="margin-top: 110px;margin-right: 100px;">
+              <div class="container">
+              <h3><b style="color: #b81b1b;">Team Score</b> : <b id="miscore"></b> </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-toggle ="modal" data-target="#predict">
+                Predict IPL Winner
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+        <!-- Tab Pane Ends Here -->
+
+         <!-- Tab Pane Starts Here -->
+        <div class="mdl-layout__tab-panel is-active" id="dd">
+        <div class="row">
+          <div class="col-sm-8">
+            <h3 style="text-align: center;">Delhi Daredevils</h3>
+          <table class="mdl-data-table mdl-js-data-table">
+            <thead>
+            <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Batting Score</th><th>Bowling Score</th></tr>
+            </thead>
+            <tbody id="dataDD">
+            </tbody>
+          </table>
+          </div>
+          <div class="col-sm-4">
+            <div class="jumbotron" style="margin-top: 110px;margin-right: 100px;">
+              <div class="container">
+              <h3><b style="color: #b81b1b;">Team Score</b> : <b id="ddscore"></b> </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-toggle ="modal" data-target="#predict">
+                Predict IPL Winner
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+        <!-- Tab Pane Ends Here -->
+         <!-- Tab Pane Starts Here -->
+        <div class="mdl-layout__tab-panel is-active" id="gl">
+        <div class="row">
+          <div class="col-sm-8">
+            <h3 style="text-align: center;">Gujarat Lions</h3>
+          <table class="mdl-data-table mdl-js-data-table">
+            <thead>
+            <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Batting Score</th><th>Bowling Score</th></tr>
+            </thead>
+            <tbody id="dataGL">
+            </tbody>
+          </table>
+          </div>
+          <div class="col-sm-4">
+            <div class="jumbotron" style="margin-top: 110px;margin-right: 100px;">
+              <div class="container">
+              <h3><b style="color: #b81b1b;">Team Score</b> : <b id="glscore"></b> </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-toggle ="modal" data-target="#predict">
+                Predict IPL Winner
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+        <!-- Tab Pane Ends Here -->
+         <!-- Tab Pane Starts Here -->
+        <div class="mdl-layout__tab-panel is-active" id="kxip">
+        <div class="row">
+          <div class="col-sm-8">
+            <h3 style="text-align: center;">Kings XI Punjab</h3>
+          <table class="mdl-data-table mdl-js-data-table">
+            <thead>
+            <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Batting Score</th><th>Bowling Score</th></tr>
+            </thead>
+            <tbody id="dataKXIP">
+            </tbody>
+          </table>
+          </div>
+          <div class="col-sm-4">
+            <div class="jumbotron" style="margin-top: 110px;margin-right: 100px;">
+              <div class="container">
+              <h3><b style="color: #b81b1b;">Team Score</b> : <b id="kxipscore"></b> </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-toggle ="modal" data-target="#predict">
+                Predict IPL Winner
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+        <!-- Tab Pane Ends Here -->
+         <!-- Tab Pane Starts Here -->
+        <div class="mdl-layout__tab-panel is-active" id="rps">
+        <div class="row">
+          <div class="col-sm-8">
+            <h3 style="text-align: center;">Raising Pune Spuergiant</h3>
+          <table class="mdl-data-table mdl-js-data-table">
+            <thead>
+            <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Batting Score</th><th>Bowling Score</th></tr>
+            </thead>
+            <tbody id="dataRPS">
+            </tbody>
+          </table>
+          </div>
+          <div class="col-sm-4">
+            <div class="jumbotron" style="margin-top: 110px;margin-right: 100px;">
+              <div class="container">
+              <h3><b style="color: #b81b1b;">Team Score</b> : <b id="rpsscore"></b> </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-toggle ="modal" data-target="#predict">
+                Predict IPL Winner
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+        <!-- Tab Pane Ends Here -->
+         <!-- Tab Pane Starts Here -->
+        <div class="mdl-layout__tab-panel is-active" id="srh">
+        <div class="row">
+          <div class="col-sm-8">
+            <h3 style="text-align: center;">Sun Risers Hyderabad</h3>
+          <table class="mdl-data-table mdl-js-data-table">
+            <thead>
+            <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Batting Score</th><th>Bowling Score</th></tr>
+            </thead>
+            <tbody id="dataSRH">
+            </tbody>
+          </table>
+          </div>
+          <div class="col-sm-4">
+            <div class="jumbotron" style="margin-top: 110px;margin-right: 100px;">
+              <div class="container">
+              <h3><b style="color: #b81b1b;">Team Score</b> : <b id="srhscore"></b> </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-toggle ="modal" data-target="#predict">
+                Predict IPL Winner
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+        <!-- Tab Pane Ends Here -->
+
+         <!-- Tab Pane Starts Here -->
+        <div class="mdl-layout__tab-panel is-active" id="kkr">
+        <div class="row">
+          <div class="col-sm-8">
+            <h3 style="text-align: center;">Kolkata Night Riders</h3>
+          <table class="mdl-data-table mdl-js-data-table">
+            <thead>
+            <tr><th class="mdl-data-table__cell--non-numeric">Name</th><th>Batting Score</th><th>Bowling Score</th></tr>
+            </thead>
+            <tbody id="dataKKR">
+            </tbody>
+          </table>
+          </div>
+          <div class="col-sm-4">
+            <div class="jumbotron" style="margin-top: 110px;margin-right: 100px;">
+              <div class="container">
+              <h3><b style="color: #b81b1b;">Team Score</b> : <b id="kkrscore"></b> </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" data-toggle ="modal" data-target="#predict">
+                Predict IPL Winner
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+        <!-- Tab Pane Ends Here -->
+
+        
+                
+        <footer class="mdl-mega-footer" style="padding-top: 0px;padding-bottom: 12px;margin-bottom: 0px;">
+          <div class="mdl-mega-footer--bottom-section" style="margin-bottom: 0px;">
+            <div class="mdl-logo">
+              More Information
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </body>
+
+<script src="computing.js"></script>
+</html>
